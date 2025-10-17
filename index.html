@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dossiê da Saúde em Suzano: Uma Análise Cívica</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F2F2F2;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 40vh;
+            max-height: 450px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 45vh;
+                max-height: 400px;
+            }
+        }
+        .kpi-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            text-align: center;
+        }
+        .kpi-value {
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1;
+            color: #D0021B;
+        }
+        .kpi-label {
+            font-size: 1rem;
+            color: #1C1C1C;
+            margin-top: 0.5rem;
+        }
+        .flow-item {
+            background-color: white;
+            border: 2px solid #4A90E2;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgb(0 0 0 / 0.05);
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #4A90E2;
+            padding: 1rem 0;
+            transform: rotate(90deg);
+        }
+        @media (min-width: 768px) {
+            .flow-arrow {
+                transform: rotate(0deg);
+            }
+        }
+    </style>
+</head>
+<body class="text-[#1C1C1C]">
+
+    <header class="bg-[#005A82] text-white py-8 px-4 text-center">
+        <h1 class="text-4xl md:text-5xl font-black tracking-tight">Dossiê da Saúde em Suzano</h1>
+        <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-blue-100">Uma investigação cívica sobre a aplicação de centenas de milhões de reais em contratos de gestão da saúde pública, iniciada por um único cidadão.</p>
+    </header>
+
+    <main class="container mx-auto px-4 md:px-8 py-12">
+
+        <section id="ponta-do-iceberg" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-2 text-[#0087C1]">1. A Ponta do Iceberg</h2>
+            <p class="text-center max-w-3xl mx-auto mb-8">Tudo começou com um problema simples e visível: o aplicativo "Saúde Suzano", principal ferramenta de agendamento online para o cidadão, estava quebrado. Esta falha inicial foi o fio que, ao ser puxado, revelou um emaranhado de irregularidades.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="kpi-card">
+                    <div class="kpi-value text-[#D0021B]">80+</div>
+                    <div class="kpi-label">Dias com o serviço de agendamento principal inoperante ou com falhas críticas em 2025.</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value text-[#D0021B]">R$ 42.000</div>
+                    <div class="kpi-label">Pagamento mensal da INTS à MTM pelo serviço de tecnologia, mesmo durante o período de inoperância.</div>
+                </div>
+                 <div class="kpi-card lg:col-span-1 md:col-span-2">
+                    <div class="kpi-value text-[#D0021B]">4</div>
+                    <div class="kpi-label">Portais de transparência diferentes, dificultando deliberadamente a fiscalização dos contratos.</div>
+                </div>
+            </div>
+             <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-bold text-center mb-4">Dano ao Erário Comprovado</h3>
+                <p class="text-center mb-6">A investigação revelou, através dos próprios relatórios financeiros da INTS, que a MTM, empresa subcontratada, recebeu o pagamento integral de R$ 42.000,00 por mês, mesmo nos meses em que o serviço estava comprovadamente fora do ar. Isso caracteriza dano ao erário: pagamento por um serviço não prestado.</p>
+                <div class="chart-container" style="height: 300px; max-height: 300px;">
+                    <canvas id="danoErarioChart"></canvas>
+                </div>
+                 <p class="text-center text-sm mt-4 text-gray-600">Este gráfico ilustra como o pagamento pelo serviço de tecnologia, apesar de ser uma pequena fração do custo mensal do contrato (mais de R$ 6 milhões), continuou sendo feito integralmente, configurando o desperdício de dinheiro público.</p>
+            </div>
+        </section>
+        
+        <hr class="border-t-2 border-gray-300 my-16">
+
+        <section id="contrato-oculto" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-2 text-[#0087C1]">2. O Contrato Bilionário Escondido</h2>
+            <p class="text-center max-w-3xl mx-auto mb-8">A investigação sobre o Contrato da Atenção Básica (PSF/SAMU) revelou a existência de uma operação muito maior e mais obscura: a gestão da Santa Casa de Misericórdia de Suzano, regida por um contrato separado, bilionário, que foi omitido dos portais de transparência principais e posteriormente removido do único local onde estava acessível.</p>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-bold text-center mb-4">A Disparidade dos Contratos</h3>
+                 <p class="text-center mb-6">A INTS opera dois mega-contratos paralelos em Suzano. O contrato da Santa Casa, muito mais caro, foi mantido em um portal secundário, uma clara violação ao princípio da transparência que exige acesso fácil e centralizado à informação.</p>
+                <div class="chart-container">
+                    <canvas id="comparativoContratosChart"></canvas>
+                </div>
+                <p class="text-center text-sm mt-4 text-gray-600">A comparação dos valores anuais revela a real dimensão da operação da Santa Casa e a gravidade de sua ocultação. Juntos, os contratos somam quase R$ 300 milhões por ano.</p>
+            </div>
+        </section>
+
+        <hr class="border-t-2 border-gray-300 my-16">
+        
+        <section id="vacuo-financeiro" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-2 text-[#D0021B]">3. O "Vácuo" de Meio Bilhão de Reais</h2>
+            <p class="text-center max-w-3xl mx-auto mb-8">A descoberta mais grave: o contrato da Santa Casa foi assinado em 2021 e pago por mais de 3 anos. No entanto, a própria INTS confessou em seu site que só assumiu a "gestão plena" em maio de 2024, convenientemente em ano eleitoral. A pergunta que se impõe é: para onde foram os mais de R$ 500 milhões pagos durante este vácuo?</p>
+            
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-bold text-center mb-4">Uma Cronologia Inexplicável</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="flow-item border-[#4A90E2]">
+                        <div class="font-bold text-lg">FEVEREIRO 2021</div>
+                        <div>Contrato de R$ 828 Milhões para gestão da Santa Casa é assinado. Legalmente, os pagamentos se iniciam.</div>
+                    </div>
+                    <div class="flow-arrow font-black">→</div>
+                    <div class="flow-item border-[#F5A623]">
+                        <div class="font-bold text-lg">2022 - 2023</div>
+                        <div class="font-bold text-lg">2023</div>
+                        <div>Aditivos de reajuste e reequilíbrio são assinados, provando que o contrato estava financeiramente ativo e sendo pago.</div>
+                    </div>
+                     <div class="flow-arrow font-black">→</div>
+                    <div class="flow-item border-[#D0021B]">
+                        <div class="font-bold text-lg">MAIO 2024</div>
+                        <div>A INTS anuncia publicamente que só então assumiu a "gestão plena", mais de 3 anos após a assinatura do contrato.</div>
+                    </div>
+                </div>
+                 <div class="mt-8 kpi-card">
+                    <div class="kpi-value text-[#D0021B]">~ R$ 500 Mi</div>
+                    <div class="kpi-label">Valor estimado pago pela Prefeitura à INTS durante o "vácuo" de 3 anos, por um serviço que, segundo a própria INTS, ainda não era plenamente executado.</div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-t-2 border-gray-300 my-16">
+
+        <section id="conta-nao-fecha" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-2 text-[#0087C1]">4. A Conta Não Fecha: O "Lucro" da Entidade Sem Fins Lucrativos</h2>
+            <p class="text-center max-w-3xl mx-auto mb-8">A análise dos balancetes contábeis da INTS revelou outra anomalia gritante. Mesmo com denúncias de falta de funcionários, a organização apresentou uma "sobra de caixa" (superávit) de R$ 4,5 milhões em um único mês (Agosto/2025), provando que o contrato é superdimensionado ou que o serviço não está sendo entregue como deveria.</p>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-bold text-center mb-4">Análise Financeira de Agosto de 2025</h3>
+                <p class="text-center mb-6">Com um repasse total de R$ 24,1 milhões em um mês, a folha de pagamento consumiu apenas uma fração dos recursos. A expressiva sobra de caixa de R$ 4,5 milhões é incompatível com a natureza de uma OS e com as reclamações sobre a falta de pessoal.</p>
+                <div class="chart-container">
+                    <canvas id="balanceteChart"></canvas>
+                </div>
+                 <p class="text-center text-sm mt-4 text-gray-600">Este gráfico mostra a desproporção entre o total recebido da Prefeitura e os custos, evidenciando o "superávit" milionário, que deveria ser reinvestido na melhoria do serviço, como a contratação de mais profissionais.</p>
+            </div>
+        </section>
+        
+        <hr class="border-t-2 border-gray-300 my-16">
+
+        <section id="colcha-retalhos" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-2 text-[#0087C1]">5. Uma Colcha de Retalhos Mal Costurada</h2>
+            <p class="text-center max-w-3xl mx-auto mb-8">A investigação revelou um padrão de negligência e amadorismo que permeia toda a documentação, demonstrando um descaso que só é possível em um ambiente de baixa fiscalização. São erros grosseiros que anulam a credibilidade dos processos.</p>
+             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="p-4 bg-red-100 border-l-4 border-red-500 rounded-r-lg">
+                    <h4 class="font-bold text-red-800">Origem Viciada</h4>
+                    <p class="text-red-700">O documento de qualificação da INTS em 2013 contém uma ata do Conselho de Saúde aprovando outra empresa (Fênix), o que torna o "marco zero" da parceria legalmente questionável.</p>
+                </div>
+                <div class="p-4 bg-yellow-100 border-l-4 border-yellow-500 rounded-r-lg">
+                    <h4 class="font-bold text-yellow-800">CNPJ e Endereço Inválidos</h4>
+                    <p class="text-yellow-700">Um subcontrato de reforma de R$ 518 mil para a Santa Casa foi assinado com uma empresa cujo CNPJ era inválido e o endereço apontava para um salão de beleza.</p>
+                </div>
+                <div class="p-4 bg-blue-100 border-l-4 border-blue-500 rounded-r-lg">
+                    <h4 class="font-bold text-blue-800">"Dança das Cadeiras"</h4>
+                    <p class="text-blue-700">Três membros diferentes da mesma família (Urpia) aparecem assinando contratos e aditivos em momentos estratégicos, diluindo a responsabilidade legal.</p>
+                </div>
+                 <div class="p-4 bg-green-100 border-l-4 border-green-500 rounded-r-lg md:col-span-2 lg:col-span-1">
+                    <h4 class="font-bold text-green-800">Sem Mecanismos de Controle</h4>
+                    <p class="text-green-700">Os contratos não possuem cláusulas de SLA (Acordo de Nível de Serviço), o que impede a aplicação de multas por inoperância e garante o pagamento integral mesmo com falhas.</p>
+                </div>
+                 <div class="p-4 bg-purple-100 border-l-4 border-purple-500 rounded-r-lg">
+                    <h4 class="font-bold text-purple-800">Pagamento em Duplicidade</h4>
+                    <p class="text-purple-700">Mesmo com a INTS na "gestão plena", a Prefeitura continua a pagar por outros serviços dentro da Santa Casa, indicando um possível pagamento duplicado com dinheiro público.</p>
+                </div>
+                 <div class="p-4 bg-gray-100 border-l-4 border-gray-500 rounded-r-lg">
+                    <h4 class="font-bold text-gray-800">Quarteirização do Serviço Fim</h4>
+                    <p class="text-gray-700">A INTS subcontratou o serviço de maternidade (GHD), sua atividade principal, atuando como mera intermediária financeira e não como gestora especialista.</p>
+                </div>
+            </div>
+        </section>
+        
+        <hr class="border-t-2 border-gray-300 my-16">
+
+        <section id="conclusao" class="text-center">
+            <h2 class="text-3xl font-bold text-center mb-2 text-[#005A82]">Conclusão: A Urgência da Fiscalização</h2>
+            <p class="text-center max-w-3xl mx-auto mb-8">O que começou com um aplicativo deficiente revelou um sistema de gestão da saúde que opera com opacidade, negligência e indícios de grave dano ao erário. A concentração de quase R$ 300 milhões por ano nas mãos de uma única organização, que demonstra tais falhas, exige uma auditoria imediata e rigorosa por parte dos órgãos de controle.</p>
+            <div class="mt-8">
+                <p class="text-lg font-semibold">Esta investigação cívica resultou na instauração da <strong class="text-[#D0021B]">Notícia de Fato nº 0451.0000661/2025</strong> pelo Ministério Público de São Paulo, que segue em andamento.</p>
+                <p class="mt-4">A transparência não é um favor. É a lei. E a fiscalização é o dever de todo cidadão.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-6 bg-gray-800 text-white text-sm">
+        <p>Infográfico gerado em Outubro de 2025 com base em documentos públicos e na investigação cívica de Everson de Sousa Almeida.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const wrapLabel = (label) => {
+                if (typeof label !== 'string' || label.length <= 16) {
+                    return label;
+                }
+                const words = label.split(' ');
+                const lines = [];
+                let currentLine = '';
+                for (const word of words) {
+                    if ((currentLine + ' ' + word).length > 16 && currentLine.length > 0) {
+                        lines.push(currentLine);
+                        currentLine = word;
+                    } else {
+                        if (currentLine.length > 0) {
+                            currentLine += ' ' + word;
+                        } else {
+                            currentLine = word;
+                        }
+                    }
+                }
+                lines.push(currentLine);
+                return lines;
+            };
+
+            const tooltipTitleCallback = {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                  return label.join(' ');
+                                } else {
+                                  return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            
+            const vibrantPalette = {
+                blue: '#4A90E2',
+                teal: '#50E3C2',
+                orange: '#F5A623',
+                red: '#D0021B',
+                background: '#F2F2F2',
+                darkText: '#1C1C1C'
+            };
+
+            const danoErarioCtx = document.getElementById('danoErarioChart').getContext('2d');
+            new Chart(danoErarioCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Custo Mensal do Contrato (PSF/SAMU)', 'Pagamento pelo App Inoperante'],
+                    datasets: [{
+                        data: [6082000, 42000],
+                        backgroundColor: [vibrantPalette.blue, vibrantPalette.red],
+                        borderColor: [vibrantPalette.blue, vibrantPalette.red],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        title: {
+                            display: false
+                        },
+                        tooltip: {
+                             callbacks: {
+                                title: function(tooltipItems) {
+                                    const item = tooltipItems[0];
+                                    let label = item.chart.data.labels[item.dataIndex];
+                                    if (Array.isArray(label)) {
+                                      return label.join(' ');
+                                    } else {
+                                      return label;
+                                    }
+                                },
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const comparativoContratosCtx = document.getElementById('comparativoContratosChart').getContext('2d');
+            new Chart(comparativoContratosCtx, {
+                type: 'bar',
+                data: {
+                    labels: [wrapLabel('Atenção Básica e SAMU (Contrato 014/2020)'), wrapLabel('Santa Casa (Contrato 001/2021)')],
+                    datasets: [{
+                        label: 'Valor Mensal do Contrato (R$)',
+                        data: [73000.00, 18000000.00],
+                        backgroundColor: [vibrantPalette.blue, vibrantPalette.orange],
+                        borderColor: [vibrantPalette.blue, vibrantPalette.orange],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                     scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return (value / 1000000) + 'M';
+                                }
+                            }
+                        }
+                    },
+                    ...tooltipTitleCallback
+                }
+            });
+            
+            const balanceteCtx = document.getElementById('balanceteChart').getContext('2d');
+            new Chart(balanceteCtx, {
+                type: 'bar',
+                data: {
+                    labels: [wrapLabel('Análise Financeira (Agosto 2025)')],
+                    datasets: [
+                        {
+                            label: 'Despesa com Pessoal',
+                            data: [13800000],
+                            backgroundColor: vibrantPalette.blue,
+                        },
+                        {
+                            label: 'Outros Custos (Fornecedores, Medicamentos, etc.)',
+                            data: [5800000],
+                            backgroundColor: vibrantPalette.teal,
+                        },
+                        {
+                            label: 'Superávit ("Lucro")',
+                            data: [4500000],
+                            backgroundColor: vibrantPalette.red,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: {
+                             callbacks: {
+                                title: function(tooltipItems) {
+                                    const item = tooltipItems[0];
+                                    let label = item.chart.data.labels[item.dataIndex];
+                                    if (Array.isArray(label)) {
+                                      return label.join(' ');
+                                    } else {
+                                      return label;
+                                    }
+                                },
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+                        legend: {
+                           position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                        },
+                        y: {
+                            stacked: true,
+                             ticks: {
+                                callback: function(value) {
+                                    return (value / 1000000) + 'M';
+                                }
+                            }
+                        }
+                    },
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
+
